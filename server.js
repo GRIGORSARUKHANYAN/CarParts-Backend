@@ -14,7 +14,7 @@ dotenv.config();
 // mongodb://localhost:27017/node-mongodb-crud
 const app = express();
 app.use(express.json());
-mongoose.connect(process.env.MONGOLINK)
+mongoose.connect('mongodb+srv://Academy-Project:12345@academy-platform.vwbfliw.mongodb.net/?retryWrites=true&w=majority')
   .then(() => {
     console.log('Connected to MongoDB');
   })

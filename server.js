@@ -29,7 +29,7 @@ app.use("/api", carPartRoutes);
 //     "utf8"
 //   );
 //   const doc = parse(fileContents);
-//   app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(doc));
+//   app.use("/api-docs", swaggerUI.serve, swaggerUI. setup(doc));
 // }
 // setupSwagger()
 const PORT = process.env.PORT || 5000;

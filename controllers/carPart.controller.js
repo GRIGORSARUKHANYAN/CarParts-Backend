@@ -18,6 +18,33 @@ class CarPartsController {
     }
   };
 
+  updateCarPart = async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const data = req.body;
+      
+      const result = await this.carPartService.updateCarPart(
+        data,id
+      );
+      res.status(201).json({ result });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getCarPartById = async (req, res, next) => {
+    try {
+      const id = req.params.id;
+
+      
+      const result = await this.carPartService.getCarPartById(
+        id
+      );
+      res.status(201).json({ result });
+    } catch (error) {
+      next(error);
+    }
+  };
 
 
   getCarPart = async (req, res, next) => {

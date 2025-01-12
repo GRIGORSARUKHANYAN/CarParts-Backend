@@ -6,7 +6,7 @@ const CarPartSchema = new Schema({
   partName: { type: String, default: "" },
   position: { type: String, default: "" },
   color: { type: String, default: "" },
-  isOriginal:{ type: Boolean, default: true },
+  isOriginal:{ type: Boolean, default: false },
   location: { type: String, default: "" },
   noth: { type: String, default: "" },
   count:{ type: Number, default: 1 },

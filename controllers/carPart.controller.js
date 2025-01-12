@@ -45,12 +45,24 @@ class CarPartsController {
       next(error);
     }
   };
+  deleteCarPartById = async (req, res, next) => {
+    try {
+      const id = req.params.id;
+
+      
+      const result = await this.carPartService.deleteCarPartById(
+        id
+      );
+      res.status(201).json({ result });
+    } catch (error) {
+      next(error);
+    }
+  };
 
 
   getCarPart = async (req, res, next) => {
     try {
       const data = req.body;
-      console.log(data);
       
       
       const result = await this.carPartService.getCarPart(

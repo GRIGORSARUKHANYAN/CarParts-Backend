@@ -60,7 +60,6 @@ export async function createCarParts(carParts) {
     [carParts]
   );
   const id = result.insertId;
-  console.log(id);
 
   await getResponses(id);
 }

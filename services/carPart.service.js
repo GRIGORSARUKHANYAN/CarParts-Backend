@@ -7,6 +7,7 @@ class CarPartService {
 
 
    async updateCarPart(data,id) {
+    
     if (!ObjectId.isValid(id)) {
       throw new HttpException(400, "is not a valid ObjectID");
     }
@@ -21,12 +22,11 @@ class CarPartService {
       throw new HttpException(400, "part is not difaind");
     }
       findPart?.set(data);
-      // console.log("mtav",findPart);
       
       let updatedData =await this.carPart.findOneAndUpdate({ _id: id }, findPart);
     
       return findPart
-    // throw new HttpException(409, "Post not found");
+    // throw new HttpException(409, "Part not found");
     
   }
 
@@ -37,10 +37,22 @@ class CarPartService {
     }
     const findPart = await this.carPart.find({_id:id});
     if (!findPart) {
-      throw new HttpException(409, "Post not found");
+      throw new HttpException(409, "Part not found");
     }
   
     return findPart;
+  }
+  async deleteCarPartById(id) {
+    if (!ObjectId.isValid(id)) {
+      throw new HttpException(400, "is not a valid ObjectID");
+    }
+    const findPart = await this.carPart.findByIdAndDelete(id);
+    
+    if (!findPart) {
+      throw new HttpException(409, "Part not found");
+    }
+  
+    return "Part deleted";
   }
 
   async createCarPart(data) {
@@ -62,12 +74,11 @@ class CarPartService {
   
     if (findPart[0]) {
       findPart[0]?.set({count:Number(findPart[0].count)+Number(data.count)});
-      // console.log("mtav",findPart);
       
       let updatedData =await this.carPart.findOneAndUpdate({ _id: findPart[0]._id }, findPart[0]);
     
       return findPart[0]
-    // throw new HttpException(409, "Post not found");
+    // throw new HttpException(409, "Part not found");
     }else{
       const carPart = new CarPartModel(data);
       let mycarPart= await carPart.save() 
@@ -79,9 +90,8 @@ class CarPartService {
   
     const findParts = await this.carPart.find(data);
     if (!findParts) {
-      throw new HttpException(409, "Post not found");
+      throw new HttpException(409, "Part not found");
     }
-    console.log(findParts);
     
   
     return findParts;

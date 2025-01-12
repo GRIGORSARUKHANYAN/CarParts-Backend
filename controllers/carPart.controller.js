@@ -1,4 +1,5 @@
 import CarPartService from '../services/carPart.service.js';
+import ExcelJS from 'exceljs'
 
 class CarPartsController {
   constructor() {
@@ -72,6 +73,51 @@ class CarPartsController {
     } catch (error) {
       next(error);
     }
+  };
+
+
+
+
+
+  getReport = async (req, res, next) => {
+
+    try {
+      // Create a new workbook
+      const workbook = new ExcelJS.Workbook();
+
+      // Add a worksheet
+      const worksheet = workbook.addWorksheet('My Sheet');
+
+      const result = await this.carPartService.getCarPart(
+      );
+      // Define columns
+      worksheet.columns = [
+          { header: 'Պահեստամասեր', key: 'id', width: 50 },
+      ];
+
+      // Add rows
+      for (let i = 0; i < result.length; i++) {
+        let text=`${result[i].make} ${result[i].model} ${result[i].partName} ${result[i].position}}`
+        worksheet.addRow({ id: text, });
+  
+        
+      }
+      // worksheet.addRow({ id: 1, name: 'John Doe', age: 25 });
+      // worksheet.addRow({ id: 2, name: 'Jane Smith', age: 30 });
+
+      // Set the response headers for file download
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-Disposition', 'attachment; filename=myExcelFile.xlsx');
+
+      // Write the workbook to the response
+      await workbook.xlsx.write(res);
+
+      // End the response
+      res.end();
+  } catch (err) {
+      console.error('Error generating Excel file:', err);
+      res.status(500).send('Failed to generate Excel file');
+  }
   };
 }
 

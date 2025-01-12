@@ -7,6 +7,7 @@ router.post("/carPart", carPartsController.createCarPart);
 router.put("/carPart/:id", carPartsController.updateCarPart);
 router.post("/searchCarPart", carPartsController.getCarPart);
 router.get("/carPart/:id", carPartsController.getCarPartById);
+router.get("/getReport", carPartsController.getReport);
 router.delete("/carPart/:id", carPartsController.deleteCarPartById);
 
 

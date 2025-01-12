@@ -92,7 +92,7 @@ class CarPartsController {
       );
       // Define columns
       worksheet.columns = [
-          { header: 'Պահեստամասեր', key: 'id', width: 50 },
+          {  key: 'id', width: 50 },
       ];
 
       // Add rows

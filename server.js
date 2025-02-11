@@ -13,7 +13,7 @@ import cors from 'cors'
 // mongodb://localhost:27017/node-mongodb-crud
 const app = express();
 app.use(express.json());
-mongoose.connect('mongodb+srv://Academy-Project:12345@academy-platform.vwbfliw.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGOLINK)
   .then(() => {
     console.log('Connected to MongoDB');
   })

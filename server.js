@@ -8,9 +8,6 @@ import mongoose from 'mongoose';
 import cors from 'cors'
 
 
-
-// mongodb+srv://Academy-Project:12345@academy-platform.vwbfliw.mongodb.net/?retryWrites=true&w=majority
-// mongodb://localhost:27017/node-mongodb-crud
 const app = express();
 app.use(express.json());
 mongoose.connect(process.env.MONGOLINK)

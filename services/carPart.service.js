@@ -100,7 +100,7 @@ class CarPartService {
 
   async validationCarPart(data) {
 
-    if (!data || !data.make || !data.model || !data.partName || !data.position  || !data.count || !data.price) {
+    if (!data || !data.make || !data.model || !data.partName   || !data.count || !data.price) {
       return false
     }
 

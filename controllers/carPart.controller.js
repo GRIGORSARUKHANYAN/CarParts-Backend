@@ -97,11 +97,12 @@ class CarPartsController {
 
       // Add rows
       for (let i = 0; i < result.length; i++) {
-        let text=`${result[i].make} ${result[i].model} ${result[i].partName} ${result[i].position}}`
+        let text=`${result[i].make} ${result[i].model} ${result[i].partName} ${result[i].position} ${result[i].count} ${result[i].price}`
         worksheet.addRow({ id: text, });
   
         
       }
+      // akshdaishdi
       // worksheet.addRow({ id: 1, name: 'John Doe', age: 25 });
       // worksheet.addRow({ id: 2, name: 'Jane Smith', age: 30 });
 

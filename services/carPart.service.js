@@ -86,17 +86,43 @@ class CarPartService {
     return mycarPart
     }
   }
-
   async getCarPart(data) {
+    const query = [];
   
-    const findParts = await this.carPart.find(data);
-    if (!findParts) {
+    const allFields = Object.keys(data);
+  
+    for (const field of allFields) {
+      const value = data[field];
+  
+      if (typeof value === 'string') {
+        query.push({
+          [field]: { $regex: value, $options: 'i' } // 'i' for case-insensitive
+        });
+      }
+    }
+  
+    if (query.length === 0) {
+      throw new HttpException(400, 'Invalid query');
+    }
+  
+    const findParts = await this.carPart.find({ $or: query });
+  
+    if (!findParts || findParts.length === 0) {
       throw new HttpException(409, "Part not found");
     }
-    
   
     return findParts;
   }
+  // async getCarPart(data) {
+  
+  //   const findParts = await this.carPart.find(data);
+  //   if (!findParts) {
+  //     throw new HttpException(409, "Part not found");
+  //   }
+    
+  
+  //   return findParts;
+  // }
 
   async validationCarPart(data) {
 

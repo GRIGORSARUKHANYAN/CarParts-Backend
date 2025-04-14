@@ -87,25 +87,17 @@ class CarPartService {
     }
   }
   async getCarPart(data) {
-    const query = [];
+    const query = {};
   
-    const allFields = Object.keys(data);
-  
-    for (const field of allFields) {
-      const value = data[field];
-  
-      if (typeof value === 'string') {
-        query.push({
-          [field]: { $regex: value, $options: 'i' } // 'i' for case-insensitive
-        });
+    for (const key in data) {
+      if (key === "partName") {
+        query[key] = { $regex: data[key], $options: "i" }; // regex փնտրում partname-ի համար
+      } else {
+        query[key] = data[key]; // մնացած դաշտերը ճշգրիտ համապատասխանությամբ
       }
     }
   
-    if (query.length === 0) {
-      throw new HttpException(400, 'Invalid query');
-    }
-  
-    const findParts = await this.carPart.find({ $or: query });
+    const findParts = await this.carPart.find(query);
   
     if (!findParts || findParts.length === 0) {
       throw new HttpException(409, "Part not found");
@@ -113,6 +105,7 @@ class CarPartService {
   
     return findParts;
   }
+  
   // async getCarPart(data) {
   
   //   const findParts = await this.carPart.find(data);

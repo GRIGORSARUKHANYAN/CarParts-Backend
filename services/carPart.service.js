@@ -86,17 +86,39 @@ class CarPartService {
     return mycarPart
     }
   }
-
-  async getCarPart(data) {
-  
-    const findParts = await this.carPart.find(data);
-    if (!findParts) {
-      throw new HttpException(409, "Part not found");
-    }
+// apranqi gin
+// async getCarPart(data) {
+//   const findPart = await this.carPart.find();
+//   let result=0
+//   for (let i = 0; i < findPart.length; i++) {
+//     let num=findPart[i].price*findPart[i].count
+//     result =result+num
     
-  
-    return findParts;
+    
+//   }
+// console.log(result);
+
+//   return findPart;
+// }
+async getCarPart(data) {
+  const query = {};
+
+  for (const key in data) {
+    if (key === "partname") {
+      query[key] = { $regex: data[key], $options: "i" }; // regex փնտրում partname-ի համար
+    } else {
+      query[key] = data[key]; // մնացած դաշտերը ճշգրիտ համապատասխանությամբ
+    }
   }
+
+  const findParts = await this.carPart.find(query);
+
+  if (!findParts || findParts.length === 0) {
+    throw new HttpException(409, "Part not found");
+  }
+
+  return findParts;
+}
 
   async validationCarPart(data) {
 

@@ -86,20 +86,7 @@ class CarPartService {
     return mycarPart
     }
   }
-// apranqi gin
-// async getCarPartPrice(data) {
-//   const findPart = await this.carPart.find();
-//   let result=0
-//   for (let i = 0; i < findPart.length; i++) {
-//     let num=findPart[i].price*findPart[i].count
-//     result =result+num
-    
-    
-//   }
-// console.log(result);
 
-//   return findPart;
-// }
   async getCarPart(data) {
   
     const findParts = await this.carPart.find(data);

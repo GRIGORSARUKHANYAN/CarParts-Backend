@@ -104,7 +104,7 @@ async getCarPart(data) {
   const query = {};
 
   for (const key in data) {
-    if (key === "partname") {
+    if (key === "partName") {
       query[key] = { $regex: data[key], $options: "i" }; // regex փնտրում partname-ի համար
     } else {
       query[key] = data[key]; // մնացած դաշտերը ճշգրիտ համապատասխանությամբ

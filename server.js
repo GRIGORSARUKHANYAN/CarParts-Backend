@@ -4,27 +4,31 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
+
+// ✅ Trust proxy for Render (X-Forwarded-For)
+app.set("trust proxy", 1);
+
+// Middleware
 app.use(express.json());
 app.use(cors());
 
-// 🟢 24 ժամում 10 հարցում սահմանափակում
+// ✅ Rate limit: 24 ժամում 10 հարցում ամեն IP-ի համար
 const contactLimiter = rateLimit({
   windowMs: 24 * 60 * 60 * 1000, // 24 ժամ
-  max: 10,                       // թույլատրել միայն 10 հարցում
+  max: 10,
   message: {
     success: false,
     error: "You can send only 10 requests in 24 hours."
   }
 });
 
-// 🟢 Կապ MongoDB-ի հետ
+// ✅ MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("DB Error:", err));
 
-// 🟢 Schema
-
+// ✅ Contact Schema
 const contactSchema = new mongoose.Schema({
   name: String,
   surname: String,
@@ -36,27 +40,29 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model("Contact", contactSchema);
 
-// 🟢 POST /contact + rate limit
+// ✅ POST /contact route + rate limit
 app.post("/contact", contactLimiter, async (req, res) => {
   try {
     const { name, surname, phone, email, message } = req.body;
 
-    const newData = new Contact({
+    const newContact = new Contact({
       name,
       surname,
       phone,
       email,
-      message,
+      message
     });
 
-    await newData.save();
-
+    await newContact.save();
     res.status(201).json({ success: true, message: "Contact saved" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ success: false, error: "Server error" });
   }
 });
 
-// 🟢 Սերվերի գործարկում
-// const PORT = 5000;
-app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
+// ✅ Server listen
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

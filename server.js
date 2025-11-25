@@ -19,7 +19,7 @@ const contactLimiter = rateLimit({
 
 // 🟢 Կապ MongoDB-ի հետ
 mongoose
-  .connect("mongodb+srv://Academy-Project:12345@academy-platform.vwbfliw.mongodb.net/?retryWrites=true&w=majority")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("DB Error:", err));
 

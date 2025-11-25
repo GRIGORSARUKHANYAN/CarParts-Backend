@@ -24,6 +24,7 @@ mongoose
   .catch((err) => console.log("DB Error:", err));
 
 // 🟢 Schema
+
 const contactSchema = new mongoose.Schema({
   name: String,
   surname: String,

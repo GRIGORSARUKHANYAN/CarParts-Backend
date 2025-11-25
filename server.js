@@ -60,4 +60,4 @@ app.post("/contact", contactLimiter, async (req, res) => {
 // 🟢 Սերվերի գործարկում
 
 // const PORT = 5000;
-app.listen(process.env.PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
